@@ -32,13 +32,15 @@ final class FieldTypeImpl implements FieldType {
     private final DataType dataType;
     private final Optional<TemplateValue> templateValue;
     private final FieldTypeReference origin;
-
+    private final Optional<FkConstraint> constraint;
 
     FieldTypeImpl(
             final String name,
             final DataType dataType,
             final Optional<TemplateValue> templateValue,
-            final FieldTypeReference origin) {
+            final FieldTypeReference origin,
+            final Optional<FkConstraint> constraint) {
+        this.constraint = constraint;
         this.name = Preconditions.checkNotNull(name);
         this.dataType = Preconditions.checkNotNull(dataType);
         this.templateValue = Preconditions.checkNotNull(templateValue);

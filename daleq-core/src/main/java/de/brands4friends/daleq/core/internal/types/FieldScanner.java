@@ -28,6 +28,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
@@ -52,7 +53,8 @@ class FieldScanner {
                 final FieldDef fieldDef = (FieldDef) field.get(null);
                 final String name = fieldDef.getName().or(field.getName());
                 final DataType dataType = fieldDef.getDataType();
-                return new FieldTypeImpl(name, dataType, fieldDef.getTemplate(), fieldDef);
+                final Optional<FkConstraint> constraint = Optional.absent();
+                return new FieldTypeImpl(name, dataType, fieldDef.getTemplate(), fieldDef, constraint);
             } catch (IllegalAccessException e) {
                 throw new IllegalStateException(e);
             }

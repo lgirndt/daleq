@@ -50,7 +50,7 @@ public class TableTypeFactoryTest {
 
         final TableType tableType = factory.create(MyTable.class);
         final TableType expected = new TableTypeImpl("MY_TABLE",
-                new FieldTypeImpl("ID", DataType.INTEGER, Optional.<TemplateValue>absent(), MyTable.ID));
+                new FieldTypeImpl("ID", DataType.INTEGER, Optional.<TemplateValue>absent(), MyTable.ID, Optional.<FkConstraint>absent()));
 
         assertThat(tableType, is(expected));
     }

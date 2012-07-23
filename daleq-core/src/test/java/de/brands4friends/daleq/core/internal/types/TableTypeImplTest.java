@@ -48,8 +48,8 @@ public class TableTypeImplTest {
                 "P NAME",
                 integer,
                 Optional.<TemplateValue>of(new StringTemplateValue("bar")),
-                origin
-        );
+                origin,
+                Optional.<FkConstraint>absent());
         final TableType table =
                 new TableTypeImpl("SOME_NAME",
                         fieldType);

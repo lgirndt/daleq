@@ -81,8 +81,8 @@ public class FieldScannerTest {
     @Test
     public void scanningAClassWithPropertyDefs_should_extractThosePropertyDefs() {
         final Collection<FieldType> expected = Lists.<FieldType>newArrayList(
-                new FieldTypeImpl("ID", DataType.INTEGER, Optional.<TemplateValue>absent(), WithPropertyDefs.ID),
-                new FieldTypeImpl("NAME", DataType.VARCHAR, Optional.<TemplateValue>absent(), WithPropertyDefs.NAME)
+                new FieldTypeImpl("ID", DataType.INTEGER, Optional.<TemplateValue>absent(), WithPropertyDefs.ID, Optional.<FkConstraint>absent()),
+                new FieldTypeImpl("NAME", DataType.VARCHAR, Optional.<TemplateValue>absent(), WithPropertyDefs.NAME, Optional.<FkConstraint>absent())
         );
         assertThat(scanner.scan(WithPropertyDefs.class), is(expected));
     }
@@ -94,7 +94,7 @@ public class FieldScannerTest {
     @Test
     public void scanningWithExplicitName_should_haveThatName() {
         final Collection<FieldType> expected = Lists.<FieldType>newArrayList(
-                new FieldTypeImpl(NAME, DataType.INTEGER, Optional.<TemplateValue>absent(), WithExplicitName.ID)
+                new FieldTypeImpl(NAME, DataType.INTEGER, Optional.<TemplateValue>absent(), WithExplicitName.ID, Optional.<FkConstraint>absent())
         );
         assertThat(scanner.scan(WithExplicitName.class), is(expected));
     }
@@ -112,7 +112,8 @@ public class FieldScannerTest {
                                 "NAME",
                                 DataType.VARCHAR,
                                 Optional.<TemplateValue>of(new StringTemplateValue("some template")),
-                                WithExplicitTemplate.NAME)
+                                WithExplicitTemplate.NAME,
+                                Optional.<FkConstraint>absent())
                 )
         );
     }
