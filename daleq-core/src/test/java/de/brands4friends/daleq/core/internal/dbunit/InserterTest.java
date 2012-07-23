@@ -46,7 +46,6 @@ import de.brands4friends.daleq.core.internal.dbunit.dataset.InMemoryDataSetFacto
 
 public class InserterTest extends EasyMockSupport {
 
-    private IDataSetFactory dataSetFactory;
     private DatabaseOperation insertOperation;
     private Inserter inserter;
     private IDatabaseConnection connection;
@@ -59,7 +58,7 @@ public class InserterTest extends EasyMockSupport {
 
     @Before
     public void setUp() {
-        dataSetFactory = new InMemoryDataSetFactory();
+        final IDataSetFactory dataSetFactory = new InMemoryDataSetFactory();
         insertOperation = createMock(DatabaseOperation.class);
         inserter = new Inserter(dataSetFactory, insertOperation);
         connection = createMock(IDatabaseConnection.class);
