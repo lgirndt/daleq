@@ -16,39 +16,5 @@
 
 package de.brands4friends.daleq.core.internal.types;
 
-import com.google.common.base.Objects;
-
-import de.brands4friends.daleq.core.FieldTypeReference;
-import de.brands4friends.daleq.core.TableTypeReference;
-
-public final class FkConstraint {
-    private final TableTypeReference tableRef;
-    private final FieldTypeReference fieldRef;
-
-    public FkConstraint(final TableTypeReference tableRef, final FieldTypeReference fieldRef) {
-        this.tableRef = tableRef;
-        this.fieldRef = fieldRef;
-    }
-
-    @Override
-    public final int hashCode() {
-        return Objects.hashCode(tableRef, fieldRef);
-    }
-
-    @Override
-    public final boolean equals(Object obj) {
-        if (obj instanceof FkConstraint) {
-            final FkConstraint that = (FkConstraint) obj;
-
-            return Objects.equal(tableRef, that.tableRef)
-                    && Objects.equal(fieldRef, that.fieldRef);
-        }
-
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this).add("tableRef", tableRef).add("fieldRef", fieldRef).toString();
-    }
+public interface FkConstraint {
 }

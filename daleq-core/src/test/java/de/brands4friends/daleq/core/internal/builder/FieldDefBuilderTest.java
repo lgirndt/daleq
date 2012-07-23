@@ -37,6 +37,7 @@ import de.brands4friends.daleq.core.TemplateValue;
 import de.brands4friends.daleq.core.internal.template.StringTemplateValue;
 import de.brands4friends.daleq.core.internal.types.ClassBasedTableTypeReference;
 import de.brands4friends.daleq.core.internal.types.FkConstraint;
+import de.brands4friends.daleq.core.internal.types.FkConstraintImpl;
 import de.brands4friends.daleq.core.internal.types.TableTypeFactory;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
@@ -127,8 +128,11 @@ public class FieldDefBuilderTest {
     @Test
     public void fkConstraint_should_beCorrect() {
         final FieldDef fd = someFd().fkConstraint(ReferencedTable.class, ReferencedTable.REF);
-        assertThat(fd.getFkConstraint().get(),
-                is(new FkConstraint(ClassBasedTableTypeReference.of(ReferencedTable.class), ReferencedTable.REF))
+        final FkConstraint expected = new FkConstraintImpl(
+                ClassBasedTableTypeReference.of(ReferencedTable.class),
+                ReferencedTable.REF
+        );
+        assertThat(fd.getFkConstraint().get(), is(expected)
         );
     }
 

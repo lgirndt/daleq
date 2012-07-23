@@ -23,6 +23,6 @@ import org.junit.Test;
 public class FkConstraintTest {
     @Test
     public void testHashCodeAndEquals() {
-        forClass(FkConstraint.class).verify();
+        forClass(FkConstraintImpl.class).verify();
     }
 }

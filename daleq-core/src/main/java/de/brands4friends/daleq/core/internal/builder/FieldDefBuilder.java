@@ -29,6 +29,7 @@ import de.brands4friends.daleq.core.TemplateValue;
 import de.brands4friends.daleq.core.internal.template.StringTemplateValue;
 import de.brands4friends.daleq.core.internal.types.ClassBasedTableTypeReference;
 import de.brands4friends.daleq.core.internal.types.FkConstraint;
+import de.brands4friends.daleq.core.internal.types.FkConstraintImpl;
 
 public final class FieldDefBuilder implements FieldDef {
 
@@ -92,7 +93,7 @@ public final class FieldDefBuilder implements FieldDef {
                 this.dataType,
                 this.name,
                 this.template,
-                Optional.of(new FkConstraint(ClassBasedTableTypeReference.of(tableRef), fieldRef))
+                Optional.<FkConstraint>of(new FkConstraintImpl(ClassBasedTableTypeReference.of(tableRef), fieldRef))
         );
     }
 
