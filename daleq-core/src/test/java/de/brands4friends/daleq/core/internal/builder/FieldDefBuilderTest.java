@@ -46,6 +46,11 @@ public class FieldDefBuilderTest {
     public static final String NEW_NAME = "new name";
     private TableTypeFactory factory;
 
+    @Before
+    public void setUp() throws Exception {
+        factory = new TableTypeFactory();
+    }
+
     @Test
     public void testHashCodeAndEquals() {
         EqualsVerifier
@@ -109,11 +114,6 @@ public class FieldDefBuilderTest {
         final FieldDef fd = someFd().template(null);
         // should already have failed!
         assertThat(fd, Matchers.is(nullValue()));
-    }
-
-    @Before
-    public void setUp() throws Exception {
-        factory = new TableTypeFactory();
     }
 
     @TableDef("RESOLVE")
