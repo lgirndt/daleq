@@ -20,7 +20,7 @@ import static nl.jqno.equalsverifier.EqualsVerifier.forClass;
 
 import org.junit.Test;
 
-public class FkConstraintTest {
+public class FkConstraintImplTest {
     @Test
     public void testHashCodeAndEquals() {
         forClass(FkConstraintImpl.class).verify();
