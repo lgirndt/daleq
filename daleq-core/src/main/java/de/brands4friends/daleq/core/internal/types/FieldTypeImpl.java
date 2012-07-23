@@ -25,6 +25,7 @@ import com.google.common.base.Preconditions;
 import de.brands4friends.daleq.core.DataType;
 import de.brands4friends.daleq.core.FieldType;
 import de.brands4friends.daleq.core.FieldTypeReference;
+import de.brands4friends.daleq.core.FkConstraint;
 import de.brands4friends.daleq.core.TemplateValue;
 
 final class FieldTypeImpl implements FieldType {

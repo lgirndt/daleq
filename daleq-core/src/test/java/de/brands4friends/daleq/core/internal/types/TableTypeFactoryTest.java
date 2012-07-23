@@ -27,6 +27,7 @@ import com.google.common.base.Optional;
 import de.brands4friends.daleq.core.Daleq;
 import de.brands4friends.daleq.core.DataType;
 import de.brands4friends.daleq.core.FieldDef;
+import de.brands4friends.daleq.core.FkConstraint;
 import de.brands4friends.daleq.core.TableDef;
 import de.brands4friends.daleq.core.TableType;
 import de.brands4friends.daleq.core.TemplateValue;

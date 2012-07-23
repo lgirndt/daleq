@@ -18,8 +18,6 @@ package de.brands4friends.daleq.core;
 
 import com.google.common.base.Optional;
 
-import de.brands4friends.daleq.core.internal.types.FkConstraint;
-
 public interface FieldDef extends FieldTypeReference {
     Optional<String> getName();
 

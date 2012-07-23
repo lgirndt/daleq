@@ -35,6 +35,7 @@ import com.google.common.collect.Lists;
 import de.brands4friends.daleq.core.DataType;
 import de.brands4friends.daleq.core.FieldDef;
 import de.brands4friends.daleq.core.FieldType;
+import de.brands4friends.daleq.core.FkConstraint;
 import de.brands4friends.daleq.core.internal.builder.FieldDefBuilder;
 
 /**

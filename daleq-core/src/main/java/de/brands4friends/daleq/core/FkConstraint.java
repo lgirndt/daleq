@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.brands4friends.daleq.core.internal.types;
+package de.brands4friends.daleq.core;
 
 public interface FkConstraint {
 }

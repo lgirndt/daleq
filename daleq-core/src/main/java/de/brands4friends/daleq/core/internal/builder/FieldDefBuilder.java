@@ -24,11 +24,11 @@ import de.brands4friends.daleq.core.DataType;
 import de.brands4friends.daleq.core.FieldDef;
 import de.brands4friends.daleq.core.FieldType;
 import de.brands4friends.daleq.core.FieldTypeReference;
+import de.brands4friends.daleq.core.FkConstraint;
 import de.brands4friends.daleq.core.TableType;
 import de.brands4friends.daleq.core.TemplateValue;
 import de.brands4friends.daleq.core.internal.template.StringTemplateValue;
 import de.brands4friends.daleq.core.internal.types.ClassBasedTableTypeReference;
-import de.brands4friends.daleq.core.internal.types.FkConstraint;
 import de.brands4friends.daleq.core.internal.types.FkConstraintImpl;
 
 public final class FieldDefBuilder implements FieldDef {
