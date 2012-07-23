@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
 
 import com.google.common.base.Function;
@@ -43,22 +42,19 @@ import de.brands4friends.daleq.core.internal.formatting.MarkdownTableFormatter;
 
 public class DbUnitDaleqSupport implements DaleqSupport {
 
-    private final IDataSetFactory dataSetFactory;
     private final ConnectionFactory connectionFactory;
-    private final DatabaseOperation insertOperation;
+    private final Inserter inserter;
 
     private final Context context;
     private final Asserter asserter;
 
     DbUnitDaleqSupport(
-            final IDataSetFactory dataSetFactory,
             final ConnectionFactory connectionFactory,
-            final DatabaseOperation insertOperation,
-            final Asserter asserter) {
+            final Asserter asserter,
+            final Inserter inserter) {
 
-        this.dataSetFactory = dataSetFactory;
         this.connectionFactory = connectionFactory;
-        this.insertOperation = insertOperation;
+        this.inserter = inserter;
         this.asserter = asserter;
 
         this.context = new SimpleContext();
@@ -68,7 +64,8 @@ public class DbUnitDaleqSupport implements DaleqSupport {
         final IDataSetFactory dataSetFactory = new InMemoryDataSetFactory();
         final DatabaseOperation insertOperation = DatabaseOperation.INSERT;
         final Asserter asserter = new Asserter(dataSetFactory, connectionFactory);
-        return new DbUnitDaleqSupport(dataSetFactory, connectionFactory, insertOperation, asserter);
+        final Inserter inserter = new Inserter(dataSetFactory, insertOperation);
+        return new DbUnitDaleqSupport(connectionFactory, asserter, inserter);
     }
 
     /**
@@ -96,7 +93,7 @@ public class DbUnitDaleqSupport implements DaleqSupport {
     @Override
     public final void insertIntoDatabase(final Table... tables) {
         try {
-            insertIntoDatabase(toTables(tables));
+            inserter.insertIntoDatabase(toTables(tables), createDatabaseConnection());
 
         } catch (DatabaseUnitException e) {
             throw new DaleqException(e);
@@ -134,8 +131,4 @@ public class DbUnitDaleqSupport implements DaleqSupport {
         new MarkdownTableFormatter().formatTo(tableData, printer);
     }
 
-    private void insertIntoDatabase(final List<TableData> tables) throws DatabaseUnitException, SQLException {
-        final IDataSet dbUnitDataset = dataSetFactory.create(tables);
-        insertOperation.execute(createDatabaseConnection(), dbUnitDataset);
-    }
 }
