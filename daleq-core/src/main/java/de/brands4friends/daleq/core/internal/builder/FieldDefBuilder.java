@@ -25,9 +25,9 @@ import de.brands4friends.daleq.core.FieldDef;
 import de.brands4friends.daleq.core.FieldType;
 import de.brands4friends.daleq.core.FieldTypeReference;
 import de.brands4friends.daleq.core.TableType;
-import de.brands4friends.daleq.core.TableTypeReference;
 import de.brands4friends.daleq.core.TemplateValue;
 import de.brands4friends.daleq.core.internal.template.StringTemplateValue;
+import de.brands4friends.daleq.core.internal.types.ClassBasedTableTypeReference;
 import de.brands4friends.daleq.core.internal.types.FkConstraint;
 
 public final class FieldDefBuilder implements FieldDef {
@@ -63,6 +63,11 @@ public final class FieldDefBuilder implements FieldDef {
     }
 
     @Override
+    public Optional<FkConstraint> getFkConstraint() {
+        return fkConstraint;
+    }
+
+    @Override
     public FieldDef name(final String name) {
         Preconditions.checkNotNull(name);
         return new FieldDefBuilder(this.dataType, Optional.of(name), this.template, fkConstraint);
@@ -79,7 +84,7 @@ public final class FieldDefBuilder implements FieldDef {
     }
 
     @Override
-    public FieldDef fkConstraint(final TableTypeReference tableRef, final FieldTypeReference fieldRef) {
+    public <T> FieldDef fkConstraint(final Class<T> tableRef, final FieldTypeReference fieldRef) {
         Preconditions.checkNotNull(tableRef);
         Preconditions.checkNotNull(fieldRef);
 
@@ -87,7 +92,7 @@ public final class FieldDefBuilder implements FieldDef {
                 this.dataType,
                 this.name,
                 this.template,
-                Optional.of(new FkConstraint(tableRef, fieldRef))
+                Optional.of(new FkConstraint(ClassBasedTableTypeReference.of(tableRef), fieldRef))
         );
     }
 

@@ -35,6 +35,8 @@ import de.brands4friends.daleq.core.TableDef;
 import de.brands4friends.daleq.core.TableType;
 import de.brands4friends.daleq.core.TemplateValue;
 import de.brands4friends.daleq.core.internal.template.StringTemplateValue;
+import de.brands4friends.daleq.core.internal.types.ClassBasedTableTypeReference;
+import de.brands4friends.daleq.core.internal.types.FkConstraint;
 import de.brands4friends.daleq.core.internal.types.TableTypeFactory;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
@@ -114,6 +116,30 @@ public class FieldDefBuilderTest {
         final FieldDef fd = someFd().template(null);
         // should already have failed!
         assertThat(fd, Matchers.is(nullValue()));
+    }
+
+
+    @TableDef("REFERENCED")
+    public static class ReferencedTable {
+        public static final FieldDef REF = Daleq.fd(DataType.INTEGER);
+    }
+
+    @Test
+    public void fkConstraint_should_beCorrect() {
+        final FieldDef fd = someFd().fkConstraint(ReferencedTable.class, ReferencedTable.REF);
+        assertThat(fd.getFkConstraint().get(),
+                is(new FkConstraint(ClassBasedTableTypeReference.of(ReferencedTable.class), ReferencedTable.REF))
+        );
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void nullTableOnFkConstraint_should_throw() {
+        someFd().fkConstraint(null, ReferencedTable.REF);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void nullFieldOnFkConstraint_should_fail() {
+        someFd().fkConstraint(ReferencedTable.class, null);
     }
 
     @TableDef("RESOLVE")

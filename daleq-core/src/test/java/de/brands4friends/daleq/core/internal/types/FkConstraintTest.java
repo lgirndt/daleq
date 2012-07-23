@@ -14,24 +14,15 @@
  * limitations under the License.
  */
 
-package de.brands4friends.daleq.core;
+package de.brands4friends.daleq.core.internal.types;
 
-import com.google.common.base.Optional;
+import static nl.jqno.equalsverifier.EqualsVerifier.forClass;
 
-import de.brands4friends.daleq.core.internal.types.FkConstraint;
+import org.junit.Test;
 
-public interface FieldDef extends FieldTypeReference {
-    Optional<String> getName();
-
-    DataType getDataType();
-
-    Optional<TemplateValue> getTemplate();
-
-    FieldDef name(String name);
-
-    FieldDef template(String template);
-
-    <T> FieldDef fkConstraint(Class<T> tableRef, FieldTypeReference fieldRef);
-
-    Optional<FkConstraint> getFkConstraint();
+public class FkConstraintTest {
+    @Test
+    public void testHashCodeAndEquals() {
+        forClass(FkConstraint.class).verify();
+    }
 }
