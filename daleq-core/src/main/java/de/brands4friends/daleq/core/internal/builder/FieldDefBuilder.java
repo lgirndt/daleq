@@ -23,20 +23,25 @@ import com.google.common.base.Preconditions;
 import de.brands4friends.daleq.core.DataType;
 import de.brands4friends.daleq.core.FieldDef;
 import de.brands4friends.daleq.core.FieldType;
+import de.brands4friends.daleq.core.FieldTypeReference;
 import de.brands4friends.daleq.core.TableType;
+import de.brands4friends.daleq.core.TableTypeReference;
 import de.brands4friends.daleq.core.TemplateValue;
 import de.brands4friends.daleq.core.internal.template.StringTemplateValue;
+import de.brands4friends.daleq.core.internal.types.FkConstraint;
 
 public final class FieldDefBuilder implements FieldDef {
 
     private final DataType dataType;
     private final Optional<String> name;
     private final Optional<TemplateValue> template;
+    private final Optional<FkConstraint> fkConstraint;
 
     private FieldDefBuilder(
             final DataType dataType,
             final Optional<String> name,
-            final Optional<TemplateValue> template) {
+            final Optional<TemplateValue> template, final Optional<FkConstraint> fkConstraint) {
+        this.fkConstraint = fkConstraint;
         this.dataType = Preconditions.checkNotNull(dataType);
         this.name = Preconditions.checkNotNull(name);
         this.template = Preconditions.checkNotNull(template);
@@ -60,7 +65,7 @@ public final class FieldDefBuilder implements FieldDef {
     @Override
     public FieldDef name(final String name) {
         Preconditions.checkNotNull(name);
-        return new FieldDefBuilder(this.dataType, Optional.of(name), this.template);
+        return new FieldDefBuilder(this.dataType, Optional.of(name), this.template, fkConstraint);
     }
 
     @Override
@@ -69,9 +74,23 @@ public final class FieldDefBuilder implements FieldDef {
         return new FieldDefBuilder(
                 this.dataType,
                 this.name,
-                Optional.<TemplateValue>of(new StringTemplateValue(template))
+                Optional.<TemplateValue>of(new StringTemplateValue(template)),
+                fkConstraint);
+    }
+
+    @Override
+    public FieldDef fkConstraint(final TableTypeReference tableRef, final FieldTypeReference fieldRef) {
+        Preconditions.checkNotNull(tableRef);
+        Preconditions.checkNotNull(fieldRef);
+
+        return new FieldDefBuilder(
+                this.dataType,
+                this.name,
+                this.template,
+                Optional.of(new FkConstraint(tableRef, fieldRef))
         );
     }
+
 
     @Override
     public String toString() {
@@ -80,7 +99,12 @@ public final class FieldDefBuilder implements FieldDef {
 
     public static FieldDef fd(final DataType dataType) {
         Preconditions.checkNotNull(dataType);
-        return new FieldDefBuilder(dataType, Optional.<String>absent(), Optional.<TemplateValue>absent());
+        return new FieldDefBuilder(
+                dataType,
+                Optional.<String>absent(),
+                Optional.<TemplateValue>absent(),
+                Optional.<FkConstraint>absent()
+        );
     }
 
     @Override

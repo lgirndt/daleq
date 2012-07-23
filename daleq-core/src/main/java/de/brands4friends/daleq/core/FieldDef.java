@@ -28,4 +28,6 @@ public interface FieldDef extends FieldTypeReference {
     FieldDef name(String name);
 
     FieldDef template(String template);
+
+    FieldDef fkConstraint(TableTypeReference tableRef, FieldTypeReference fieldRef);
 }
