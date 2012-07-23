@@ -93,7 +93,7 @@ public class DbUnitDaleqSupport implements DaleqSupport {
     @Override
     public final void insertIntoDatabase(final Table... tables) {
         try {
-            inserter.insertIntoDatabase(toTables(tables), createDatabaseConnection());
+            inserter.insertIntoDatabase(Arrays.asList(tables), createDatabaseConnection(), context);
 
         } catch (DatabaseUnitException e) {
             throw new DaleqException(e);

@@ -16,15 +16,33 @@
 
 package de.brands4friends.daleq.core.internal.dbunit;
 
+import static de.brands4friends.daleq.core.Daleq.aRow;
+import static de.brands4friends.daleq.core.Daleq.aTable;
+import static org.easymock.EasyMock.capture;
+import static org.easymock.EasyMock.eq;
+import static org.hamcrest.Matchers.arrayContaining;
+import static org.junit.Assert.assertThat;
+
+import java.sql.SQLException;
+import java.util.Collections;
+
+import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ITable;
 import org.dbunit.operation.DatabaseOperation;
+import org.easymock.Capture;
 import org.easymock.EasyMockSupport;
+import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.Test;
 
 import de.brands4friends.daleq.core.Daleq;
 import de.brands4friends.daleq.core.DataType;
 import de.brands4friends.daleq.core.FieldDef;
 import de.brands4friends.daleq.core.TableDef;
+import de.brands4friends.daleq.core.internal.builder.SimpleContext;
+import de.brands4friends.daleq.core.internal.dbunit.dataset.InMemoryDataSetFactory;
 
 public class InserterTest extends EasyMockSupport {
 
@@ -41,33 +59,33 @@ public class InserterTest extends EasyMockSupport {
 
     @Before
     public void setUp() {
-        dataSetFactory = createMock(IDataSetFactory.class);
+        dataSetFactory = new InMemoryDataSetFactory();
         insertOperation = createMock(DatabaseOperation.class);
         inserter = new Inserter(dataSetFactory, insertOperation);
         connection = createMock(IDatabaseConnection.class);
     }
 
-//    @Test
-//    public void inserIntoDatabase_should_insertAnIDataSetWithDbUnit() throws SQLException, DatabaseUnitException {
-//        final Capture<IDataSet> capturedDataset = new Capture<IDataSet>();
-//        insertOperation.execute(eq(connection), capture(capturedDataset));
-//
-//        replayAll();
-//        inserter.insertIntoDatabase(
-//                Collections.singletonList(aTable(MyTable.class).with(
-//                        aRow(0).f(MyTable.VALUE, "val0"),
-//                        aRow(1).f(MyTable.VALUE, "val1")
-//                )),connection
-//
-//        );
-//        verifyAll();
-//
-//        final IDataSet dataSet = capturedDataset.getValue();
-//        assertThat(dataSet.getTableNames(), arrayContaining("FOO"));
-//        final ITable table = dataSet.getTable("FOO");
-//        assertThat(table.getValue(0, "ID"), Matchers.is((Object) "0"));
-//        assertThat(table.getValue(0, "VALUE"), Matchers.is((Object) "val0"));
-//        assertThat(table.getValue(1, "ID"), Matchers.is((Object) "1"));
-//        assertThat(table.getValue(1, "VALUE"), Matchers.is((Object) "val1"));
-//    }
+    @Test
+    public void inserIntoDatabase_should_insertAnIDataSetWithDbUnit() throws SQLException, DatabaseUnitException {
+        final Capture<IDataSet> capturedDataset = new Capture<IDataSet>();
+        insertOperation.execute(eq(connection), capture(capturedDataset));
+
+        replayAll();
+        inserter.insertIntoDatabase(
+                Collections.singletonList(aTable(MyTable.class).with(
+                        aRow(0).f(MyTable.VALUE, "val0"),
+                        aRow(1).f(MyTable.VALUE, "val1")
+                )), connection, new SimpleContext()
+
+        );
+        verifyAll();
+
+        final IDataSet dataSet = capturedDataset.getValue();
+        assertThat(dataSet.getTableNames(), arrayContaining("FOO"));
+        final ITable table = dataSet.getTable("FOO");
+        assertThat(table.getValue(0, "ID"), Matchers.is((Object) "0"));
+        assertThat(table.getValue(0, "VALUE"), Matchers.is((Object) "val0"));
+        assertThat(table.getValue(1, "ID"), Matchers.is((Object) "1"));
+        assertThat(table.getValue(1, "VALUE"), Matchers.is((Object) "val1"));
+    }
 }

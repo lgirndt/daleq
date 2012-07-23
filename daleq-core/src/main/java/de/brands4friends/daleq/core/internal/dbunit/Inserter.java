@@ -24,6 +24,11 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+
+import de.brands4friends.daleq.core.Context;
+import de.brands4friends.daleq.core.Table;
 import de.brands4friends.daleq.core.TableData;
 
 public class Inserter {
@@ -36,10 +41,24 @@ public class Inserter {
         this.insertOperation = insertOperation;
     }
 
-    public void insertIntoDatabase(final List<TableData> tables, final IDatabaseConnection databaseConnection)
+    public void insertIntoDatabase(
+            final List<Table> tables,
+            final IDatabaseConnection databaseConnection,
+            final Context context)
+
             throws DatabaseUnitException, SQLException {
-        final IDataSet dbUnitDataset = dataSetFactory.create(tables);
+        final IDataSet dbUnitDataset = dataSetFactory.create(toTables(tables, context));
         insertOperation.execute(databaseConnection, dbUnitDataset);
     }
 
+    private List<TableData> toTables(final List<Table> tables, final Context context) {
+        return Lists.transform(
+                tables,
+                new Function<Table, TableData>() {
+                    @Override
+                    public TableData apply(final Table table) {
+                        return table.build(context);
+                    }
+                });
+    }
 }
