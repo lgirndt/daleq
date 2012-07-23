@@ -32,12 +32,12 @@ public final class FkConstraintImpl implements FkConstraint {
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return Objects.hashCode(tableRef, fieldRef);
     }
 
     @Override
-    public final boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj instanceof FkConstraintImpl) {
             final FkConstraintImpl that = (FkConstraintImpl) obj;
 
