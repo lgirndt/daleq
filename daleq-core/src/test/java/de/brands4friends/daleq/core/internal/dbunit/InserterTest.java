@@ -65,7 +65,7 @@ public class InserterTest extends EasyMockSupport {
     }
 
     @Test
-    public void inserIntoDatabase_should_insertAnIDataSetWithDbUnit() throws SQLException, DatabaseUnitException {
+    public void insertIntoDatabase_should_insertAnIDataSetWithDbUnit() throws SQLException, DatabaseUnitException {
         final Capture<IDataSet> capturedDataset = new Capture<IDataSet>();
         insertOperation.execute(eq(connection), capture(capturedDataset));
 
