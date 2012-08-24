@@ -26,4 +26,6 @@ public interface FieldType {
     Optional<TemplateValue> getTemplateValue();
 
     FieldTypeReference getOrigin();
+
+    Optional<FkConstraint> getFkConstraint();
 }
