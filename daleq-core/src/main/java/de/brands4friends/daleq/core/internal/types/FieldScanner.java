@@ -62,7 +62,7 @@ class FieldScanner {
         }
     };
 
-    public static final Predicate<Field> IS_FIELD_DEF = new Predicate<Field>() {
+    private static final Predicate<Field> IS_FIELD_DEF = new Predicate<Field>() {
         @Override
         public boolean apply(@Nullable final Field field) {
             if (field == null) {
@@ -72,7 +72,7 @@ class FieldScanner {
         }
     };
 
-    public static final Predicate<Field> IS_CONSTANT = new Predicate<Field>() {
+    private static final Predicate<Field> IS_CONSTANT = new Predicate<Field>() {
         @Override
         public boolean apply(@Nullable final Field field) {
             if (field == null) {
