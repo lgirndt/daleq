@@ -30,6 +30,14 @@ public final class FkDependency {
         this.to = Preconditions.checkNotNull(to);
     }
 
+    public TableType getFrom() {
+        return from;
+    }
+
+    public TableType getTo() {
+        return to;
+    }
+
     @Override
     public final int hashCode() {
         return Objects.hashCode(from, to);
