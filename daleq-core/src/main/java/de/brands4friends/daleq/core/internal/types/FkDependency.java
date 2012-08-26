@@ -39,12 +39,12 @@ public final class FkDependency {
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return Objects.hashCode(from, to);
     }
 
     @Override
-    public final boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj instanceof FkDependency) {
             final FkDependency that = (FkDependency) obj;
 
@@ -56,7 +56,7 @@ public final class FkDependency {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return Objects.toStringHelper(this)
                 .add("from", from)
                 .add("to", to)
