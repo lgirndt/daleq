@@ -44,7 +44,7 @@ public final class FkDependency {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj instanceof FkDependency) {
             final FkDependency that = (FkDependency) obj;
 
