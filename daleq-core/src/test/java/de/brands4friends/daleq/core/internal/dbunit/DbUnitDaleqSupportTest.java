@@ -76,7 +76,7 @@ public class DbUnitDaleqSupportTest extends EasyMockSupport {
         final IDataSetFactory dataSetFactory = new InMemoryDataSetFactory();
         asserter = createMock(Asserter.class);
         final Inserter inserter = new Inserter(dataSetFactory, insertOperation);
-        daleqSupport = new DbUnitDaleqSupport(connectionFactory, asserter, inserter);
+        daleqSupport = DbUnitDaleqSupport.createInstance(connectionFactory, asserter, inserter);
     }
 
     @Test

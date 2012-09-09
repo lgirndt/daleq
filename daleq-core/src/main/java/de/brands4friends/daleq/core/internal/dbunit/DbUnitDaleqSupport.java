@@ -49,7 +49,6 @@ public final class DbUnitDaleqSupport implements DaleqSupport {
     private final Asserter asserter;
 
     private DbUnitDaleqSupport(
-            final IDataSetFactory dataSetFactory,
             final ConnectionFactory connectionFactory,
             final Asserter asserter,
             final Inserter inserter) {
@@ -69,11 +68,10 @@ public final class DbUnitDaleqSupport implements DaleqSupport {
         return new DbUnitDaleqSupport(connectionFactory, asserter, inserter);
     }
 
-    public static DbUnitDaleqSupport createInstance(final IDataSetFactory dataSetFactory,
-                                                    final ConnectionFactory connectionFactory,
-                                                    final DatabaseOperation insertOperation,
-                                                    final Asserter asserter) {
-        return new DbUnitDaleqSupport(dataSetFactory, connectionFactory, insertOperation, asserter);
+    public static DbUnitDaleqSupport createInstance(final ConnectionFactory connectionFactory,
+                                                    final Asserter asserter,
+                                                    final Inserter inserter) {
+        return new DbUnitDaleqSupport(connectionFactory, asserter, inserter);
     }
 
 
