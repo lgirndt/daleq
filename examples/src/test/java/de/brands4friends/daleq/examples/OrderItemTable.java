@@ -14,28 +14,17 @@
  * limitations under the License.
  */
 
-package de.brands4friends.daleq.core;
+package de.brands4friends.daleq.examples;
 
-import javax.annotation.Nullable;
+import static de.brands4friends.daleq.core.Daleq.fd;
+import static de.brands4friends.daleq.core.DataType.INTEGER;
 
-public interface Table {
+import de.brands4friends.daleq.core.FieldDef;
+import de.brands4friends.daleq.core.TableDef;
 
-    Table with(Row... rows);
-
-    Table withSomeRows(Iterable<Long> ids);
-
-    Table withSomeRows(long... ids);
-
-    Table withRowsUntil(long maxId);
-
-    Table withRowsBetween(long from, long to);
-
-    Table having(FieldTypeReference fieldDef, Object... values);
-
-    Table allHaving(FieldTypeReference fieldDef, @Nullable Object value);
-
-    Table havingIterable(FieldTypeReference fieldDef, Iterable<Object> values);
-
-    TableData build(final Context context);
-
+@TableDef("CUSTOMER_ORDER_ITEM")
+public class OrderItemTable {
+    public static final FieldDef ID = fd(INTEGER);
+    public static final FieldDef ORDER_ID = fd(INTEGER);
+    public static final FieldDef PRODUCT_ID = fd(INTEGER);
 }

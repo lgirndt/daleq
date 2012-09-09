@@ -20,8 +20,6 @@
 
 
 
-
-
 displayName = "Daleq Framework - Integration Tests"
 description = 'Daleq integration tests that may take long and should not be \
  called each development iteration.'
@@ -34,4 +32,16 @@ dependencies {
     testCompile deps.springTest
     testCompile deps.hsqldb
     testCompile deps.h2
+    testCompile deps.mysql
+}
+
+test {
+//    testLogging.showStandardStreams = true
+    systemProperties(
+            'spring.profiles.active': propertyOr('integration.db', 'HSQLDB'),
+            'integration.mysql.url': propertyOr('integration.mysql.url', null),
+            'integration.mysql.user': propertyOr('integration.mysql.user', null),
+            'integration.mysql.password': propertyOr('integration.mysql.password', null)
+    )
+    maxParallelForks 1
 }

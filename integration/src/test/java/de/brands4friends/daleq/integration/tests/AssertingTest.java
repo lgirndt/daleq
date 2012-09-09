@@ -20,32 +20,25 @@ import org.junit.Test;
 
 import de.brands4friends.daleq.core.Daleq;
 import de.brands4friends.daleq.core.Table;
-import de.brands4friends.daleq.integration.tables.AllTypesTable;
 import de.brands4friends.daleq.integration.tables.AssertTableTable;
 
-public abstract class IntegrationTest extends BaseTest {
-
-    @Test
-    public void everyDataType_should_beInsertedIntoTheDatabase() {
-        final Table table = Daleq.aTable(AllTypesTable.class).withRowsUntil(2000);
-        daleq.insertIntoDatabase(table);
-    }
+public class AssertingTest extends BaseTest {
 
     @Test
     public void inserting_build_asserting() {
-        final Table toBeInserted = Daleq.aTable(AssertTableTable.class).withRowsUntil(100);
+        final Table toBeInserted = Daleq.aTable(AssertTableTable.class).withRowsBetween(1, 100);
         daleq.insertIntoDatabase(toBeInserted);
 
-        final Table toBeCompared = Daleq.aTable(AssertTableTable.class).withRowsUntil(100);
+        final Table toBeCompared = Daleq.aTable(AssertTableTable.class).withRowsBetween(1, 100);
         daleq.assertTableInDatabase(toBeCompared, AssertTableTable.ID);
     }
 
     @Test
     public void inserting_build_asserting2() {
-        final Table toBeInserted = Daleq.aTable(AssertTableTable.class).withRowsUntil(100);
+        final Table toBeInserted = Daleq.aTable(AssertTableTable.class).withRowsBetween(1, 100);
         daleq.insertIntoDatabase(toBeInserted);
 
-        final Table toBeCompared = Daleq.aTable(AssertTableTable.class).withRowsUntil(100);
+        final Table toBeCompared = Daleq.aTable(AssertTableTable.class).withRowsBetween(1, 100);
         daleq.assertTableInDatabase(toBeCompared, AssertTableTable.ID);
     }
 }

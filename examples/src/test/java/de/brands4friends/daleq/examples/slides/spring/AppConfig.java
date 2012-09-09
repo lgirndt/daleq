@@ -14,36 +14,25 @@
  * limitations under the License.
  */
 
-package de.brands4friends.daleq.integration.config;
+package de.brands4friends.daleq.examples.slides.spring;
 
 import javax.sql.DataSource;
 
-import org.dbunit.dataset.datatype.IDataTypeFactory;
-import org.dbunit.ext.hsqldb.HsqldbDataTypeFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-
-import de.brands4friends.daleq.integration.beans.TableProvider;
-import de.brands4friends.daleq.integration.tables.HsqldbAllTypesTable;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
-@Profile("HSQLDB")
-public class HsqldbConfig implements DbConfig {
-
+public class AppConfig {
     @Bean
     public DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder().addScript("schema-hsqldb.sql").build();
+        return new EmbeddedDatabaseBuilder().addScript("schema.sql").build();
     }
 
     @Bean
-    public IDataTypeFactory dataTypeFactory() {
-        return new HsqldbDataTypeFactory();
-    }
-
-    @Bean
-    public TableProvider allTypesProvider() {
-        return new TableProvider(HsqldbAllTypesTable.class);
+    public PlatformTransactionManager transactionManager() {
+        return new DataSourceTransactionManager(dataSource());
     }
 }

@@ -16,9 +16,7 @@
 
 package de.brands4friends.daleq.integration.config;
 
-import javax.sql.DataSource;
-
-import org.dbunit.dataset.datatype.IDataTypeFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -32,9 +30,12 @@ import de.brands4friends.daleq.spring.SpringConnectionFactory;
 @Configuration
 public class IntegrationConfig {
 
+    @Autowired
+    private DbConfig dbConfig;
+
     @Bean
-    public PlatformTransactionManager transactionManager(final DataSource dataSource) {
-        return new DataSourceTransactionManager(dataSource);
+    public PlatformTransactionManager transactionManager() {
+        return new DataSourceTransactionManager(dbConfig.dataSource());
     }
 
     @Bean
@@ -43,10 +44,10 @@ public class IntegrationConfig {
     }
 
     @Bean
-    public ConnectionFactory connectionFactory(final DataSource dataSource, final IDataTypeFactory dataTypeFactory) {
+    public ConnectionFactory connectionFactory() {
         final SpringConnectionFactory connectionFactory = new SpringConnectionFactory();
-        connectionFactory.setDataTypeFactory(dataTypeFactory);
-        connectionFactory.setDataSource(dataSource);
+        connectionFactory.setDataTypeFactory(dbConfig.dataTypeFactory());
+        connectionFactory.setDataSource(dbConfig.dataSource());
         return connectionFactory;
     }
 }

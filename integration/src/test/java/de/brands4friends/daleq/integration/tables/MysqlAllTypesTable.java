@@ -23,13 +23,13 @@ import de.brands4friends.daleq.core.FieldDef;
 import de.brands4friends.daleq.core.TableDef;
 
 @TableDef("ALL_TYPES")
-public class AllTypesTable {
+public class MysqlAllTypesTable {
     // Characters
     public static final FieldDef A_VARCHAR = fd(DataType.VARCHAR);
     public static final FieldDef A_CHAR = fd(DataType.CHAR);
-    public static final FieldDef A_LONGVARCHAR = fd(DataType.LONGVARCHAR);
+    //    public static final FieldDef A_LONGVARCHAR = fd(DataType.LONGVARCHAR);
     public static final FieldDef A_NVARCHAR = fd(DataType.NVARCHAR);
-    public static final FieldDef A_CLOB = fd(DataType.CLOB);
+    public static final FieldDef A_TEXT = fd(DataType.CLOB);
 
     // Numerics
     public static final FieldDef A_NUMERIC = fd(DataType.NUMERIC);
@@ -52,6 +52,7 @@ public class AllTypesTable {
     // Binaries
     public static final FieldDef A_VARBINARY = fd(DataType.VARBINARY);
     //    public static final FieldDef A_BINARY = fd(DataType.BINARY);
-    public static final FieldDef A_LONGVARBINARY = fd(DataType.LONGVARBINARY);
+//    public static final FieldDef A_LONGVARBINARY = fd(DataType.LONGVARBINARY);
     public static final FieldDef A_BLOB = fd(DataType.BLOB);
+
 }

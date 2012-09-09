@@ -22,19 +22,29 @@ import org.dbunit.dataset.datatype.IDataTypeFactory;
 import org.dbunit.ext.h2.H2DataTypeFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
+import de.brands4friends.daleq.integration.beans.TableProvider;
+import de.brands4friends.daleq.integration.tables.H2AllTypesTable;
+
 @Configuration
-public class H2Config {
+@Profile("H2")
+public class H2Config implements DbConfig {
 
     @Bean
     public DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("schema.sql").build();
+        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).addScript("schema-h2.sql").build();
     }
 
     @Bean
     public IDataTypeFactory dataTypeFactory() {
         return new H2DataTypeFactory();
+    }
+
+    @Bean
+    public TableProvider allTypesProvider() {
+        return new TableProvider(H2AllTypesTable.class);
     }
 }

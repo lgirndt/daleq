@@ -16,21 +16,23 @@
 
 package de.brands4friends.daleq.core.internal.template;
 
+import java.math.BigInteger;
+
 import com.google.common.base.Objects;
 
 import de.brands4friends.daleq.core.TemplateValue;
 
 final class ModuloTemplateValue implements TemplateValue {
 
-    private final long modulus;
+    private final BigInteger modulus;
 
     public ModuloTemplateValue(final long modulus) {
-        this.modulus = modulus;
+        this.modulus = BigInteger.valueOf(modulus);
     }
 
     @Override
     public String render(final long value) {
-        return Long.toString(value % modulus);
+        return BigInteger.valueOf(value).mod(modulus).toString();
     }
 
     @Override

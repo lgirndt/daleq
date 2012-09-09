@@ -42,6 +42,7 @@ public class SimpleContext implements Context {
     );
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T getService(final Class<T> serviceName) {
         Preconditions.checkNotNull(serviceName);
         final Object service = registry.get(serviceName);
@@ -53,11 +54,6 @@ public class SimpleContext implements Context {
                     "Service " + service.getClass().getCanonicalName()
                             + " is not of type " + serviceName.getCanonicalName());
         }
-        return castToT(service);
-    }
-
-    @SuppressWarnings("unchecked")
-    private <T> T castToT(final Object service) {
         return (T) service;
     }
 }

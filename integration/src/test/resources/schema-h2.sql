@@ -22,11 +22,6 @@ CREATE TABLE ALL_TYPES (
     A_BINARY          BINARY         ,
     A_LONGVARBINARY   LONGVARBINARY  ,
     A_BLOB            BLOB
-
--- Types defined by DbUnit but not available in HSQLDB
---    A_LONGNVARCHAR    LONGNVARCHAR
---    A_NCHAR           NCHAR
---    A_BIGINT_AUX_LONG BIGINT_AUX_LONG
 );
 
 CREATE TABLE ASSERT_TABLE (

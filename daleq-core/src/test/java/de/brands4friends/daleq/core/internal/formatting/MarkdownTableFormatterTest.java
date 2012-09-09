@@ -23,7 +23,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
 
 import de.brands4friends.daleq.core.Daleq;
 import de.brands4friends.daleq.core.DataType;
@@ -75,13 +74,13 @@ public class MarkdownTableFormatterTest {
     public void should_alignToTheLongestValue() {
         final TableData table = Daleq.aTable(ColumnLength.class)
                 .withRowsUntil(5)
-                .having(ColumnLength.COLUMN, Lists.<Object>newArrayList(
+                .having(ColumnLength.COLUMN,
                         "A",
                         "ABCDEFGHIJ",
                         "ABCDEF",
                         "ABCDEFGHI",
                         ""
-                ))
+                )
                 .build(context);
         assertThat(
                 formatter.format(table),

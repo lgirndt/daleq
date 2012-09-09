@@ -33,11 +33,11 @@ public class TimestampTemplateValueTest {
 
     @Test
     public void should_render_a_datetime() {
-        assertThat(templateValue.render(0), is("1970-01-01 00:00:00.000"));
+        assertThat(templateValue.render(0), is("1970-01-01 01:00:01.000"));
     }
 
     @Test
     public void should_render_increment_time() {
-        assertThat(templateValue.render(100), is("1970-01-01 00:01:40.000"));
+        assertThat(templateValue.render(100), is("1970-01-01 01:01:41.000"));
     }
 }

@@ -17,7 +17,6 @@
 
 
 
-
 description = 'Daleq Framework'
 
 // Define Dependencies
@@ -27,7 +26,7 @@ allprojects {
     apply plugin: 'idea'	
 	
     group = 'de.brands4friends.daleq'
-    version = '0.2.0-SNAPSHOT'	
+    version = '0.3.0-SNAPSHOT'
 }
 
 subprojects {
@@ -92,6 +91,6 @@ String propertyOr(propName,defaultProp) {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.0'
+    gradleVersion = '1.1'
 }
 

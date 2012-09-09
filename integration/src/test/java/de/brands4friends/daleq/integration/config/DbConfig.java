@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-package de.brands4friends.daleq.integration.tests.fieldtypes;
+package de.brands4friends.daleq.integration.config;
 
-import org.springframework.test.context.ContextConfiguration;
+import javax.sql.DataSource;
 
-import de.brands4friends.daleq.integration.config.H2Config;
+import org.dbunit.dataset.datatype.IDataTypeFactory;
 
-@ContextConfiguration(classes = H2Config.class)
-public class H2FieldTypeTest extends FieldTypeTest {
+import de.brands4friends.daleq.integration.beans.TableProvider;
 
+public interface DbConfig {
+    DataSource dataSource();
+
+    IDataTypeFactory dataTypeFactory();
+
+    TableProvider allTypesProvider();
 }

@@ -69,7 +69,18 @@ public final class TableBuilder implements Table {
 
     @Override
     public Table withRowsUntil(final long maxId) {
+        // TODO check parameter!
         for (long i = 0; i < maxId; i++) {
+            this.rows.add(Daleq.aRow(i));
+        }
+        return this;
+    }
+
+    @Override
+    public Table withRowsBetween(final long from, final long to) {
+        Preconditions.checkArgument(from < to,
+                "Parameter from should be less than parameter to, but %s<%s is not true.", from, to);
+        for (long i = from; i <= to; i++) {
             this.rows.add(Daleq.aRow(i));
         }
         return this;
@@ -84,7 +95,12 @@ public final class TableBuilder implements Table {
     }
 
     @Override
-    public Table having(final FieldTypeReference fieldDef, final Iterable<Object> values) {
+    public Table having(final FieldTypeReference fieldDef, final Object... values) {
+        return havingIterable(fieldDef, Arrays.asList(values));
+    }
+
+    @Override
+    public Table havingIterable(final FieldTypeReference fieldDef, final Iterable<Object> values) {
         Preconditions.checkNotNull(values);
         final Iterator<Object> iter = values.iterator();
         for (Row row : rows) {

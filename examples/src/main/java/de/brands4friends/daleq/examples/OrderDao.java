@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package de.brands4friends.daleq.integration.tests.fieldtypes;
+package de.brands4friends.daleq.examples;
 
-import org.springframework.test.context.ContextConfiguration;
+import java.math.BigDecimal;
+import java.util.List;
 
-import de.brands4friends.daleq.integration.config.HsqldbConfig;
+import org.joda.time.LocalDate;
 
-@ContextConfiguration(classes = HsqldbConfig.class)
-public class HsqldbFieldTypeTest extends FieldTypeTest {
+public interface OrderDao {
+
+    List<Order> findExpensiveOrders(final long customerId, final LocalDate boughtAt, final BigDecimal minimumAmount);
 
 }

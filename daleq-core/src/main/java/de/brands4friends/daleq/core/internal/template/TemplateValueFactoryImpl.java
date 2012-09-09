@@ -74,7 +74,7 @@ public final class TemplateValueFactoryImpl implements TemplateValueFactory {
     private static final ToTemplate NUMBER_TO_TEMPLATE = new ToTemplate() {
         @Override
         public Set<DataType> mapsTypes() {
-            return of(DataType.NUMERIC, DataType.DECIMAL, DataType.INTEGER, DataType.SMALLINT,
+            return of(DataType.INTEGER, DataType.SMALLINT,
                     DataType.BIGINT, DataType.REAL, DataType.DOUBLE, DataType.FLOAT, DataType.BIGINT_AUX_LONG);
         }
 
@@ -86,11 +86,14 @@ public final class TemplateValueFactoryImpl implements TemplateValueFactory {
 
     private static final Collection<ToTemplate> TO_TEMPLATES = ImmutableList.of(
             NUMBER_TO_TEMPLATE,
+            new DelegatingToTemplate(of(DataType.NUMERIC), new ModuloTemplateValue(10000000000L)),
+            new DelegatingToTemplate(of(DataType.DECIMAL), new ModuloTemplateValue(10000000000L)),
             new DelegatingToTemplate(of(DataType.TINYINT), new ModuloTemplateValue(128)),
             new DelegatingToTemplate(of(DataType.SMALLINT), new ModuloTemplateValue(32768)),
             STRING_TO_TEMPLATE,
             new DelegatingToTemplate(of(DataType.DATE), new DateTemplateValue()),
-            new DelegatingToTemplate(of(DataType.TIME, DataType.TIMESTAMP), new TimestampTemplateValue()),
+            new DelegatingToTemplate(of(DataType.TIME, DataType.TIMESTAMP),
+                    new TimestampTemplateValue(Integer.MAX_VALUE / 2)),
             new DelegatingToTemplate(of(DataType.BOOLEAN, DataType.BIT), new ModuloTemplateValue(2)),
             new DelegatingToTemplate(of(DataType.CHAR, DataType.NCHAR), new CharTemplateValue()),
             new DelegatingToTemplate(

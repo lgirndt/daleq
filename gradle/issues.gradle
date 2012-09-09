@@ -16,12 +16,16 @@
 
 task issues() << {
 
+    def foundIssues = 0
+
     reportXmlErrors(
         fileTree("${project.testResultsDir}") {}) {xml ->
             xml.testcase.failure.each { failure ->
                 def testcase = failure.parent()
                 println "${testcase['@classname']}#${testcase['@name']}(): ${failure['@message']}"
                 println failure.text()
+
+                foundIssues++
             }
     }
 
@@ -35,6 +39,8 @@ task issues() << {
 
                 println "${name}:${line}:${column}"
                 println "    ${message}"
+
+                foundIssues++
             }
     }
 
@@ -48,7 +54,13 @@ task issues() << {
 
             println "${file}:${beginline}-${endline}"
             println "    ${rule}: ${text}"
+
+            foundIssues++
         }
+    }
+
+    if(!foundIssues) {
+        println "   No issues found."
     }
 }
 

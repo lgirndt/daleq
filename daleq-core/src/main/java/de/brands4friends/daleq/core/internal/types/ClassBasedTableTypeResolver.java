@@ -44,7 +44,7 @@ public class ClassBasedTableTypeResolver implements TableTypeResolver {
     private ClassBasedTableTypeReference<?> asClassBased(final TableTypeReference reference) {
         if (!canResolve(reference)) {
             throw new IllegalArgumentException(
-                    "The given TableTypeReference could be resolved by the ClassBasedTableTypeResolver.");
+                    "The given TableTypeReference could not be resolved by the ClassBasedTableTypeResolver.");
         }
         return (ClassBasedTableTypeReference<?>) reference;
     }

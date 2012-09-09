@@ -14,12 +14,19 @@
  * limitations under the License.
  */
 
-package de.brands4friends.daleq.examples;import de.brands4friends.daleq.core.Daleq;
+package de.brands4friends.daleq.examples;
+
+import static de.brands4friends.daleq.core.Daleq.fd;
+import static de.brands4friends.daleq.core.DataType.VARCHAR;
+
 import de.brands4friends.daleq.core.DataType;
 import de.brands4friends.daleq.core.FieldDef;
 import de.brands4friends.daleq.core.TableDef;
 
 @TableDef("CUSTOMER")
 public class CustomerTable {
-    public static final FieldDef ID = Daleq.fd(DataType.INTEGER);
+    public static final FieldDef ID = fd(DataType.INTEGER);
+    public static final FieldDef FAMILY_NAME = fd(VARCHAR);
+    public static final FieldDef GIVEN_NAME = fd(VARCHAR);
+    public static final FieldDef EMAIL = fd(VARCHAR);
 }

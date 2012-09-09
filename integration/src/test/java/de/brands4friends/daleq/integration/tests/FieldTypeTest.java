@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.brands4friends.daleq.integration.tests.fieldtypes;
+package de.brands4friends.daleq.integration.tests;
 
 import static de.brands4friends.daleq.core.Daleq.aRow;
 import static de.brands4friends.daleq.core.Daleq.aTable;
@@ -24,6 +24,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
@@ -34,13 +35,16 @@ import de.brands4friends.daleq.core.Table;
 import de.brands4friends.daleq.core.TableType;
 import de.brands4friends.daleq.core.internal.builder.SimpleContext;
 import de.brands4friends.daleq.core.internal.template.TemplateValueFactory;
-import de.brands4friends.daleq.integration.tables.AllTypesTable;
-import de.brands4friends.daleq.integration.tests.BaseTest;
+import de.brands4friends.daleq.integration.beans.TableProvider;
 
 
-public abstract class FieldTypeTest extends BaseTest {
+public class FieldTypeTest extends BaseTest {
 
     public static final long HUGE_LONG_VAL = 1273651726351726351L;
+
+    @Autowired
+    private TableProvider tableProvider;
+
     private TableType tableType;
     private TemplateValueFactory templateValueFactory;
 
@@ -48,7 +52,7 @@ public abstract class FieldTypeTest extends BaseTest {
     public void setUp() {
         final SimpleContext context = new SimpleContext();
         templateValueFactory = context.getService(TemplateValueFactory.class);
-        tableType = aTable(AllTypesTable.class).build(context).getTableType();
+        tableType = aTable(tableProvider.allTypesTable()).build(context).getTableType();
     }
 
     @Test
@@ -171,7 +175,8 @@ public abstract class FieldTypeTest extends BaseTest {
         final List<String> errors = Lists.newArrayList();
         for (FieldType fieldType : tableType.getFields()) {
             final String templatized = templatizeValue(fieldType, value);
-            final Table table = aTable(AllTypesTable.class).with(aRow(0L).f(fieldType.getOrigin(), templatized));
+            final Table table = aTable(tableProvider.allTypesTable())
+                    .with(aRow(1L).f(fieldType.getOrigin(), templatized));
 
             try {
                 daleq.insertIntoDatabase(table);

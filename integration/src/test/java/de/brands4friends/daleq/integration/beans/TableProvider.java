@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-package de.brands4friends.daleq.integration.tests;
+package de.brands4friends.daleq.integration.beans;
 
-import org.springframework.test.context.ContextConfiguration;
+public class TableProvider {
 
-import de.brands4friends.daleq.integration.config.H2Config;
+    private final Class<?> allTypesTable;
 
-@ContextConfiguration(classes = H2Config.class)
-public class H2Test extends IntegrationTest {
+    public TableProvider(
+            final Class<?> allTypesTable) {
+        this.allTypesTable = allTypesTable;
+    }
+
+    public Class<?> allTypesTable() {
+        return allTypesTable;
+    }
 }

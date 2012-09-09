@@ -17,8 +17,8 @@
   -->
 
 <!DOCTYPE suppressions PUBLIC
-    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
-    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+        "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+        "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
     <suppress files=".+Test\.java" checks="MultipleStringLiterals"/>
@@ -27,12 +27,14 @@
     <suppress files=".+Test\.java" checks="VisibilityModifier"/>
 
     <suppress files=".+Table\.java" checks="HideUtilityClassConstructor"/>
+    <suppress files=".+Table\.java" checks="StrictDuplicateCode"/>
 
     <!-- Disable finding Copyright notices as false positives -->
-    <suppress files=".*\.java" lines="1-16" checks="StrictDuplicateCode" />
+    <suppress files=".*\.java" lines="1-16" checks="StrictDuplicateCode"/>
 
     <!-- It is actually the idea of this class to hide the rest of the implementation, hence it has to fan out.
          There is no better idea how to satisfy both requirements by now.
       -->
-    <suppress files=".*de/brands4friends/daleq/internal/dbunit/DbUnitDaleqSupport\.java" checks="ClassFanOutComplexity" />
+    <suppress files=".*de/brands4friends/daleq/internal/dbunit/DbUnitDaleqSupport\.java"
+              checks="ClassFanOutComplexity"/>
 </suppressions>

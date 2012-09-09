@@ -14,31 +14,41 @@
  * limitations under the License.
  */
 
-package de.brands4friends.daleq.integration.tests;
+package de.brands4friends.daleq.examples.slides.spring;
 
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.hamcrest.Matchers;
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import de.brands4friends.daleq.core.DaleqSupport;
-import de.brands4friends.daleq.integration.config.H2Config;
-import de.brands4friends.daleq.integration.config.HsqldbConfig;
-import de.brands4friends.daleq.integration.config.IntegrationConfig;
-import de.brands4friends.daleq.integration.config.MysqlConfig;
+import de.brands4friends.daleq.examples.JdbcProductDao;
+import de.brands4friends.daleq.examples.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {
-        IntegrationConfig.class,
-        HsqldbConfig.class,
-        H2Config.class,
-        MysqlConfig.class
-})
-@SuppressWarnings("PMD.AbstractClassWithoutAnyMethod")
-public abstract class BaseTest extends AbstractTransactionalJUnit4SpringContextTests {
+@ContextConfiguration(classes = AppConfig.class)
+public class DaoTest extends AbstractTransactionalJUnit4SpringContextTests {
+
+    private JdbcProductDao jdbcProductDao;
 
     @Autowired
-    protected DaleqSupport daleq;
+    public void setDataSource(final DataSource dataSource) {
+        super.setDataSource(dataSource);
+        this.jdbcProductDao = new JdbcProductDao(dataSource);
+    }
 
+    @Test
+    public void testQuery() {
+        // How do setup data?
+        final List<Product> found = jdbcProductDao.findBySize("M");
+        // And how to assert something?
+        Assert.assertThat(found, Matchers.is(Matchers.not(Matchers.nullValue())));
+    }
 }
